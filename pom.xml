@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.organizationName</groupId>
+  <artifactId>artifactID_myFirstMavenProject</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+<dependencies>
+
+    <dependency> <!-- popular library for working with Microsoft Office douments, makes Java program read date from an external Excel sheet -->
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId> <!-- core functionality for working with MS Office file formats, handles .xls files and basic excel related operations -->
+        <version>5.2.3</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId> <!-- extends poi lib to use .xlsx, .docx, and .pptx, reading and writing to .xlsx files -->
+        <version>5.2.3</version>
+    </dependency>
+    
+</dependencies>
+
+</project>
