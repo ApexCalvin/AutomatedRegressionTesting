@@ -14,48 +14,77 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class App {
 
 	static Properties properties = new Properties();
-	static ArrayList<HashMap<String, String>> allTests;
 	private static DataFormatter dt = new DataFormatter();
-	
-	public static void importTestData() {
-		allTests = getAllTestsFromSpreadsheet();
+
+	public static ArrayList<HashMap<String, String>> importTestData() {
+		return getDataFromSpreadsheet();
 	}
 
-	private static ArrayList<HashMap<String, String>> getAllTestsFromSpreadsheet() {
+	private static ArrayList<HashMap<String, String>> getDataFromSpreadsheet() {
 
-		String filePath = loadAndGetProperty("FILE_PATH");
+		String spreadsheetFilePath = loadAndGetProperty("SPREADSHEET_FILE_PATH");
 
-		ArrayList<String> columnNames = null;
+		ArrayList<HashMap<String, String>> mapped_Tests = null;
 
-		HashMap<String, String> varsPerTestCase;
-
-		ArrayList<HashMap<String, String>> allTests = new ArrayList<HashMap<String, String>>();
-
-		try (FileInputStream fis = new FileInputStream(new File(filePath));
+		try (FileInputStream fis = new FileInputStream(new File(spreadsheetFilePath));
 				XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
 
-			Sheet sheet = workbook.getSheetAt(0);
-			Row firstRow = sheet.getRow(0);
-			
-			for (Row row : sheet) {
-				if (row.equals(firstRow)) {
-					columnNames = getColumnNames(row);
-				} else {
-					varsPerTestCase = getVarsPerTestCase(columnNames, row);
-					allTests.add(varsPerTestCase);
+			mapped_Tests = getSheetValues(workbook, "Tests");
+			ArrayList<HashMap<String, String>> mapped_BusinessLineLogin = getSheetValues(workbook, "BusinessLineLogins");
+			ArrayList<HashMap<String, String>> mapped_Wires_DataSets = getSheetValues(workbook, "Wires_DataSets");
+			ArrayList<HashMap<String, String>> mapped_Transactions_DataSets = getSheetValues(workbook, "Transactions_DataSets");
+
+			for (HashMap<String, String> testcase : mapped_Tests) {
+				for (HashMap<String, String> login : mapped_BusinessLineLogin) {
+
+					if (testcase.get("BusinessLine").equals(login.get("BusinessLine"))) {
+						testcase.putAll(login);
+					}
+				}
+
+				for (HashMap<String, String> dataset : mapped_Wires_DataSets) {
+					if (testcase.get("DataSet").equals(dataset.get("DataSet")) && testcase.get("TestSuite").equals("Wires")) {
+						testcase.putAll(dataset);
+						// System.out.println(testcase.toString());
+					}
+				}
+
+				for (HashMap<String, String> dataset : mapped_Transactions_DataSets) {
+					if (testcase.get("DataSet").equals(dataset.get("DataSet")) && testcase.get("TestSuite").equals("Transactions")) {
+						testcase.putAll(dataset);
+					}
 				}
 			}
 
-		} catch (
-
-		IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return allTests;
+		return mapped_Tests;
 	}
 
-	private static HashMap<String, String> getVarsPerTestCase(ArrayList<String> columnNames, Row row) {
+	private static ArrayList<HashMap<String, String>> getSheetValues(Workbook workbook, String sheetName) {
+
+		Sheet sheet = workbook.getSheet(sheetName);
+
+		ArrayList<String> columnNames = null;
+		HashMap<String, String> mapped_columnName_rowValue = null;
+
+		ArrayList<HashMap<String, String>> mapped_sheet = new ArrayList<HashMap<String, String>>();
+
+		for (Row row : sheet) {
+			if (row.equals(sheet.getRow(0))) {
+				columnNames = getColumnNames(row);
+			} else {
+				mapped_columnName_rowValue = getCombinedColumnNamesAndValues(columnNames, row);
+				mapped_sheet.add(mapped_columnName_rowValue);
+			}
+		}
+
+		return mapped_sheet;
+	}
+
+	private static HashMap<String, String> getCombinedColumnNamesAndValues(ArrayList<String> columnNames, Row row) {
 
 		HashMap<String, String> varsPerTestCase = new HashMap<String, String>();
 

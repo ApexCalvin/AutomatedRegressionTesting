@@ -1,18 +1,17 @@
 package package1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestSuite_Transactions {
 
 	public static void main(String[] args) {
-		App.importTestData();
-		// System.out.println("Lets go!" + App.allTests);
-		transactionsModuleFilter();
+		transactionsModuleFilter(App.importTestData());
 	}
 
-	public static void transactionsModuleFilter() {
+	public static void transactionsModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
 		boolean testSelectedFlag = false;
-		for (HashMap<String, String> testCase : App.allTests) {
+		for (HashMap<String, String> testCase : allTestCases) {
 			if (testCase.get("Execution").equals("Y") && testCase.get("Module").equals("ACH")) {
 				testSelectedFlag = true;
 				LIB_Transactions_ACH.run(testCase);
