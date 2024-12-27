@@ -1,20 +1,17 @@
 package package1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TestSuite_Wires {
 
 	public static void main(String[] args) {
-		App.importTestData();
-		// System.out.println("Lets go!" + App.allTests);
-		wiresModuleFilter();
-		
-		//System.out.println(App.properties.getProperty("HELLO"));
+		wiresModuleFilter(App.importTestData());
 	}
 
-	public static void wiresModuleFilter() {
+	public static void wiresModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
 		boolean testSelectedFlag = false;
-		for (HashMap<String, String> testCase : App.allTests) {
+		for (HashMap<String, String> testCase : allTestCases) {
 			if (testCase.get("Execution").equals("Y") && testCase.get("Module").equals("Single Wire")) {
 				testSelectedFlag = true;
 				LIB_Wires_SingleWire.run(testCase);
