@@ -1,15 +1,20 @@
-package package1;
+package test_suites;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import modules.LIB_Wires_MultiDebitWire;
+import modules.LIB_Wires_SingleWire;
+import modules.LIB_Wires_SingleWire_Interface;
+
 public class TestSuite_Wires {
 
 	public static void main(String[] args) {
-		wiresModuleFilter(App.importTestData());
+		App.startUp();
+		wires_ModuleFilter(App.allTestCases);
 	}
 
-	public static void wiresModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
+	public static void wires_ModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
 		boolean testSelectedFlag = false;
 		for (HashMap<String, String> testCase : allTestCases) {
 			if (testCase.get("Execution").equals("Y") && testCase.get("Module").equals("Single Wire")) {

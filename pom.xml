@@ -16,6 +16,11 @@
         <artifactId>poi-ooxml</artifactId> <!-- extends poi lib to use .xlsx, .docx, and .pptx, reading and writing to .xlsx files -->
         <version>5.2.3</version>
     </dependency>
+    <dependency><!-- browser automation framework, testing web app by sim user actions like click, typing, nav, form filling, and validation of UI elem -->
+    	<groupId>org.seleniumhq.selenium</groupId>
+    	<artifactId>selenium-java</artifactId>
+    	<version>4.11.0</version>
+	</dependency>
     
 </dependencies>
 

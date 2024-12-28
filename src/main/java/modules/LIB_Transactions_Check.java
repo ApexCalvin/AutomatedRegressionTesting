@@ -1,8 +1,8 @@
-package package1;
+package modules;
 
 import java.util.HashMap;
 
-public class LIB_Transactions_Transfer {
+public class LIB_Transactions_Check {
 	
 	public static void run(HashMap<String, String> testCase) {
 
@@ -15,4 +15,5 @@ public class LIB_Transactions_Transfer {
 
 		System.out.println("Ending Test: " + testCase.get("Description") + "\n");
 	}
+	
 }

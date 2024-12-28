@@ -1,8 +1,8 @@
-package package1;
+package modules;
 
 import java.util.HashMap;
 
-public class LIB_Transactions_Cash {
+public class LIB_Wires_MultiDebitWire {
 	
 	public static void run(HashMap<String, String> testCase) {
 
@@ -15,5 +15,4 @@ public class LIB_Transactions_Cash {
 
 		System.out.println("Ending Test: " + testCase.get("Description") + "\n");
 	}
-	
 }

@@ -1,8 +1,8 @@
-package package1;
+package modules;
 
 import java.util.HashMap;
 
-public class LIB_Transactions_Check {
+public class LIB_Transactions_Cash {
 	
 	public static void run(HashMap<String, String> testCase) {
 

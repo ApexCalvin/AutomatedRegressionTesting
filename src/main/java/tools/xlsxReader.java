@@ -1,4 +1,4 @@
-package package1;
+package tools;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,19 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.apache.poi.ss.usermodel.*; //Sheet, row, cell, STRING, NUMERIC, BOOLEAN
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class App {
+public class xlsxReader {
+	
+	public static DataFormatter df = new DataFormatter();
 
-	static Properties properties = new Properties();
-	private static DataFormatter dt = new DataFormatter();
-
-	public static ArrayList<HashMap<String, String>> importTestData() {
-		return getDataFromSpreadsheet();
-	}
-
-	private static ArrayList<HashMap<String, String>> getDataFromSpreadsheet() {
+	public static ArrayList<HashMap<String, String>> importDataFromSpreadsheet() {
 
 		String spreadsheetFilePath = loadAndGetProperty("SPREADSHEET_FILE_PATH");
 
@@ -45,7 +44,6 @@ public class App {
 				for (HashMap<String, String> dataset : mapped_Wires_DataSets) {
 					if (testcase.get("DataSet").equals(dataset.get("DataSet")) && testcase.get("TestSuite").equals("Wires")) {
 						testcase.putAll(dataset);
-						// System.out.println(testcase.toString());
 					}
 				}
 
@@ -63,7 +61,7 @@ public class App {
 		return mapped_Tests;
 	}
 
-	private static ArrayList<HashMap<String, String>> getSheetValues(Workbook workbook, String sheetName) {
+	public static ArrayList<HashMap<String, String>> getSheetValues(Workbook workbook, String sheetName) {
 
 		Sheet sheet = workbook.getSheet(sheetName);
 
@@ -84,32 +82,33 @@ public class App {
 		return mapped_sheet;
 	}
 
-	private static HashMap<String, String> getCombinedColumnNamesAndValues(ArrayList<String> columnNames, Row row) {
+	public static HashMap<String, String> getCombinedColumnNamesAndValues(ArrayList<String> columnNames, Row row) {
 
 		HashMap<String, String> varsPerTestCase = new HashMap<String, String>();
 
 		int i = 0;
 
 		for (Cell cell : row) {
-			varsPerTestCase.put(columnNames.get(i), dt.formatCellValue(cell));
+			varsPerTestCase.put(columnNames.get(i), df.formatCellValue(cell));
 			i++;
 		}
 
 		return varsPerTestCase;
 	}
 
-	private static ArrayList<String> getColumnNames(Row firstRow) {
+	public static ArrayList<String> getColumnNames(Row firstRow) {
 
 		ArrayList<String> columnNames = new ArrayList<String>();
 
 		for (Cell cell : firstRow)
-			columnNames.add(dt.formatCellValue(cell));
+			columnNames.add(df.formatCellValue(cell));
 
 		return columnNames;
 	}
 
 	public static String loadAndGetProperty(String var) {
-
+		Properties properties = new Properties();
+		
 		try {
 			properties.load(new FileInputStream("runtime.properties"));
 		} catch (FileNotFoundException e) {

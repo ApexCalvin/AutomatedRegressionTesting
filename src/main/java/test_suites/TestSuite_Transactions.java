@@ -1,15 +1,21 @@
-package package1;
+package test_suites;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import modules.LIB_Transactions_ACH;
+import modules.LIB_Transactions_Cash;
+import modules.LIB_Transactions_Check;
+import modules.LIB_Transactions_Transfer;
+
 public class TestSuite_Transactions {
 
 	public static void main(String[] args) {
-		transactionsModuleFilter(App.importTestData());
+		App.startUp();
+		transactions_ModuleFilter(App.allTestCases);
 	}
 
-	public static void transactionsModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
+	public static void transactions_ModuleFilter(ArrayList<HashMap<String, String>> allTestCases) {
 		boolean testSelectedFlag = false;
 		for (HashMap<String, String> testCase : allTestCases) {
 			if (testCase.get("Execution").equals("Y") && testCase.get("Module").equals("ACH")) {

@@ -1,4 +1,4 @@
-package package1;
+package modules;
 
 import java.util.HashMap;
 
