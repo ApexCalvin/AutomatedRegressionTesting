@@ -2,11 +2,9 @@ package tools;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -15,13 +13,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import test_suites.App;
+
 public class xlsxReader {
 	
 	public static DataFormatter df = new DataFormatter();
 
 	public static ArrayList<HashMap<String, String>> importDataFromSpreadsheet() {
 
-		String spreadsheetFilePath = loadAndGetProperty("SPREADSHEET_FILE_PATH");
+		String spreadsheetFilePath = App.properties.getProperty("SPREADSHEET_FILE_PATH");
 
 		ArrayList<HashMap<String, String>> mapped_Tests = null;
 
@@ -105,21 +105,4 @@ public class xlsxReader {
 
 		return columnNames;
 	}
-
-	public static String loadAndGetProperty(String var) {
-		Properties properties = new Properties();
-		
-		try {
-			properties.load(new FileInputStream("runtime.properties"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return properties.getProperty(var);
-	}
-
 }
