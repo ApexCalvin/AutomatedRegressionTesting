@@ -11,7 +11,7 @@ import modules.LIB_Transactions_Transfer;
 public class TestSuite_Transactions {
 
 	public static void main(String[] args) {
-		App.startUp();
+		App.loadTestCasesFromExternalExcelSheet();
 		transactions_ModuleFilter(App.allTestCases);
 	}
 

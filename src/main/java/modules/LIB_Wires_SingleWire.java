@@ -5,13 +5,16 @@ import java.util.HashMap;
 import pages.Page_SeleniumDemoUI;
 import test_suites.App;
 import tools.SeleniumSimplier;
+import tools.myLogger;
 
 public class LIB_Wires_SingleWire {
 
 	public static void run(HashMap<String, String> testCase) {
 
-		System.out.println("Starting Test: " + testCase.get("Description"));
-
+		String start_msg = "Starting Test: " + testCase.get("Description");
+		System.out.println(start_msg);
+		myLogger.generateReport(App.testResults_filePath, start_msg);
+		
 		double amount = Double.valueOf(testCase.get("Amount").replace(",", ""));
 		String businessLine = testCase.get("BusinessLine");
 
@@ -23,7 +26,9 @@ public class LIB_Wires_SingleWire {
 
 		automatedUI_demo();
 
-		System.out.println("Ending Test: " + testCase.get("Description") + "\n");
+		String end_msg = "Ending Test: " + testCase.get("Description");
+		myLogger.generateReport(App.testResults_filePath, end_msg);
+		System.out.println(end_msg);
 	}
 
 	public static void automatedUI_demo() {
@@ -78,5 +83,12 @@ public class LIB_Wires_SingleWire {
 		}
         
         SeleniumSimplier.closeBrowser();
+        
+        try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   
 	}
 }

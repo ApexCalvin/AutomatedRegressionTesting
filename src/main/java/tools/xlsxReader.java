@@ -25,14 +25,19 @@ public class xlsxReader {
 
 		ArrayList<HashMap<String, String>> mapped_Tests = null;
 
-		try (FileInputStream fis = new FileInputStream(new File(spreadsheetFilePath));
-				XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
+		try (
+				// try creating a workbook object of the excel sheet, then continue
+				FileInputStream fis = new FileInputStream(new File(spreadsheetFilePath));
+				XSSFWorkbook workbook = new XSSFWorkbook(fis)
+		) {
 
+			// store K,V pairs of each column to row value 
 			mapped_Tests = getSheetValues(workbook, "Tests");
 			ArrayList<HashMap<String, String>> mapped_BusinessLineLogin = getSheetValues(workbook, "BusinessLineLogins");
 			ArrayList<HashMap<String, String>> mapped_Wires_DataSets = getSheetValues(workbook, "Wires_DataSets");
 			ArrayList<HashMap<String, String>> mapped_Transactions_DataSets = getSheetValues(workbook, "Transactions_DataSets");
 
+			// map accordingly based on relation of the different tabs
 			for (HashMap<String, String> testcase : mapped_Tests) {
 				for (HashMap<String, String> login : mapped_BusinessLineLogin) {
 
@@ -57,7 +62,8 @@ public class xlsxReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		// send completed list of tests and it's test variables
 		return mapped_Tests;
 	}
 

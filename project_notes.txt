@@ -1,0 +1,29 @@
+Input (custom reader) - using xlsxReader.java, reads from an external excel and inputs variable data
+
+Output (customer writer) - using myLogger, logs the start and completion of a test suite's individual work flows
+
+Test_Suites - runs and stores specified test categories
+
+ - TestSuite_Wires.java - functional demo
+
+Modules - stores individual work flows for the test suite 
+ 
+ - LIB_Wires_SingleWire.java - functional demo
+
+Pages - stores captured UI elements of specific web pages
+
+Tools - support tools
+
+
+To-Do:
+------
+- fix multi test logging error
+- add assertions using TestNG
+
+- finish capturing elements from Selenium demo page
+
+
+Technologies:
+-------------
+Maven - build automation and project management tool 
+(dependency management, build process, project configuration)

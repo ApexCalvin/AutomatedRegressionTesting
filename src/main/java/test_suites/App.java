@@ -15,15 +15,17 @@ public class App {
 	
 	public static ArrayList<HashMap<String, String>> allTestCases;
 	
-	public static void startUp() {
+	public static String testResults_filePath;
+	
+	public static void loadTestCasesFromExternalExcelSheet() {
 		
 		try {
+			// loading the properties into the app to be called later for variables
 			properties.load(new FileInputStream("runtime.properties"));
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
